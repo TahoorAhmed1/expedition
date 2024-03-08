@@ -1,0 +1,53 @@
+{
+  "name": "expedition-orange",
+  "version": "1.0.0",
+  "description": "...",
+  "main": "server.js",
+  "scripts": {
+    "dev": "set NODE_ENV=dev&& nodemon server.js",
+    "stage": "set NODE_ENV=stage&& nodemon server.js",
+    "qa": "set NODE_ENV=qa&& nodemon server.js",
+    "start": "node server.js",
+    "seed": "node scripts/data-seeding/index.js",
+    "load-fixtures": "node scripts/load-fixtures/index.js",
+    "check-lint": "eslint .",
+    "fix-lint": "eslint --fix .",
+    "check-prettier": "prettier --check .",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.29.0",
+    "husky": "^8.0.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.5.0",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-winston": "^4.2.0",
+    "flatted": "^3.2.9",
+    "google-auth-library": "^9.2.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7",
+    "passport": "^0.6.0",
+    "passport-google-oauth2": "^0.2.0",
+    "winston": "^3.11.0"
+  },
+  "_moduleAliases": {
+    "@": "."
+  }
+}

@@ -1,0 +1,861 @@
+{
+	"info": {
+		"_postman_id": "16463d33-4d4c-4941-a118-feec33fcfd22",
+		"name": "Expedition-Orange",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28596291"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Authentication",
+							"item": [
+								{
+									"name": "OTP",
+									"item": [
+										{
+											"name": "otp for pwd reset",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.environment.set(\"otpVerificationToken\",pm.response.json().data.token)"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"email\":\"abrar.internativelabs@gmail.com\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{base_url}}/api/users/auth/otp/resetPassword",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"auth",
+														"otp",
+														"resetPassword"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "otp for email verification",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.environment.set(\"otpVerificationToken\",pm.response.json().data.token)"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"email\":\"abrar.internativelabs@gmail.com\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{base_url}}/api/users/auth/otp/emailVerification",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"auth",
+														"otp",
+														"emailVerification"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "verify otp",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.environment.set(\"otpVerifiedToken\",pm.response.json().data.token)"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Authorization",
+														"value": "{{otpVerificationToken}}",
+														"type": "text"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"otp\":\"012700\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{base_url}}/api/users/auth/otp/verify",
+													"host": [
+														"{{base_url}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"auth",
+														"otp",
+														"verify"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Signup",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"token\",pm.response.json().data.token)"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\":\"abrar\",\r\n    \"lastName\":\"ali\",\r\n    \"email\":\"abrar.internativelabs@gmail.com\",\r\n    \"password\":\"test1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/users/auth/signup",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"auth",
+												"signup"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"token\",pm.response.json().data.token)"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"abrar.internativelabs@gmail.com\",\r\n    \"password\":\"test1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/users/auth/login",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Reset Password",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{otpVerifiedToken}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"password\":\"test1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/users/auth/reset-password",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"auth",
+												"reset-password"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Google Login",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}/api/users/auth/oauth/google",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"auth",
+												"oauth",
+												"google"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Profile",
+							"item": [
+								{
+									"name": "Verify Email",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{otpVerifiedToken}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/api/users/profile/verify-email",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"profile",
+												"verify-email"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Bio",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/api/users/profile/me",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"profile",
+												"me"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Bio",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"firstName\":\"abrar\",\r\n    \"lastName\":\"ali\",\r\n    \"picture\": \"http://localhost:4400/\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/users/profile/bio",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"profile",
+												"bio"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Password",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "{{token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"oldPassword\":\"test12345\",\r\n    \"newPassword\":\"test1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/users/profile/password",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"profile",
+												"password"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Billing",
+							"item": []
+						}
+					]
+				},
+				{
+					"name": "Blogs",
+					"item": [
+						{
+							"name": "Get Blogs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/blogs?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"blogs"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Blog by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/blogs/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"blogs",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Events",
+					"item": [
+						{
+							"name": "Get Events",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/events?page=1&limit=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"events"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Event by Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/events/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"events",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Stories",
+					"item": [
+						{
+							"name": "Share Story",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"abrar\",\r\n    \"email\":\"abrar@gmail.com\",\r\n    \"description\":\"hello world\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/stories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Stories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/stories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get My Stories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/stories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"stories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Gallery",
+					"item": [
+						{
+							"name": "Get Gallery Years",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/gallery?type=images",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"gallery"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "images",
+											"description": "images or videos"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Media by Year",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/gallery/year?type=images&year=2021",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"gallery",
+										"year"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "images"
+										},
+										{
+											"key": "year",
+											"value": "2021"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Contact-us",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"abrar\",\r\n    \"email\":\"abrar.internativelabs@gmail.com\",\r\n    \"phone\":\"abrar\",\r\n    \"message\":\"abrar\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/contact-us",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"contact-us"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Authentication",
+							"item": [
+								{
+									"name": "Login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"token\",pm.response.json().data.token)"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\":\"abrar.internativelabs@gmail.com\",\r\n    \"password\":\"test1234\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/admin/users/auth/login",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"admin",
+												"users",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Gallery",
+					"item": [
+						{
+							"name": "Add to gallery",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"media\":[\r\n        \"https://res.cloudinary.com/dgki2gddz/image/upload/v1700065352/profilePicture/orange-erd-1700065350680.png\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/admin/gallery?type=images&year=2021",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"gallery"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "images"
+										},
+										{
+											"key": "year",
+											"value": "2021"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Upload Media",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profilePicture",
+									"description": "only 1 image at a time",
+									"type": "file",
+									"src": "/C:/Users/Abrar/Downloads/orange-erd.png"
+								},
+								{
+									"key": "blog",
+									"value": "",
+									"description": "only 1 image at a time",
+									"type": "text"
+								},
+								{
+									"key": "event",
+									"value": "",
+									"description": "only 1 image at a time",
+									"type": "text"
+								},
+								{
+									"key": "gallery",
+									"value": "",
+									"description": "max 10 media files",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/upload",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4400"
+		}
+	]
+}

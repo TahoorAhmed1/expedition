@@ -1,0 +1,202 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admins {
+  id        Int         @id @default(autoincrement())
+  username  String
+  email     String      @unique
+  password  String
+  picture   String?
+  role      ADMIN_ROLES
+  createdAt DateTime    @default(now()) @db.Timestamp(0)
+  updatedAt DateTime    @updatedAt @db.Timestamp(0)
+  blogs     Blogs[]
+  events    Events[]
+}
+
+model Blogs {
+  id        Int      @id @default(autoincrement())
+  title     String
+  quotation String?
+  content   String
+  picture   String?
+  authorId  Int
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @updatedAt @db.Timestamp(0)
+  admin     Admins?  @relation(fields: [authorId], references: [id])
+}
+
+model Events {
+  id          Int      @id @default(autoincrement())
+  title       String
+  address     String
+  description String
+  time        DateTime @db.Timestamp()
+  picture     String?
+  createdBy   Int
+  createdAt   DateTime @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime @updatedAt @db.Timestamp(0)
+  admin       Admins?  @relation(fields: [createdBy], references: [id])
+}
+
+model Users {
+  id             Int             @id @default(autoincrement())
+  firstName      String
+  lastName       String
+  email          String          @unique
+  picture        String?
+  createdAt      DateTime        @default(now()) @db.Timestamp(0)
+  updatedAt      DateTime        @updatedAt @db.Timestamp(0)
+  authentication Authentication?
+  subscriptions  Subscriptions[]
+  donations      Donations[]
+  stories        Stories[]
+}
+
+model Stats {
+  id        Int      @id @default(autoincrement())
+  label     String
+  value     Float
+  type      String
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @updatedAt @db.Timestamp(0)
+}
+
+model Authentication {
+  id              Int      @id @default(autoincrement())
+  userId          Int      @unique
+  isEmailVerified Boolean  @default(false)
+  password        String?
+  provider        String?
+  emailOtp        String?
+  updatedAt       DateTime @updatedAt @db.Timestamp(0)
+  user            Users    @relation(fields: [userId], references: [id])
+}
+
+model Subscriptions {
+  id             Int                 @id @default(autoincrement())
+  userId         Int
+  subscriptionId String
+  amount         Float
+  createdAt      DateTime            @default(now()) @db.Timestamp(0)
+  staus          SUBSCRIPTION_STATUS
+  user           Users               @relation(fields: [userId], references: [id])
+}
+
+model Donations {
+  id            Int              @id @default(autoincrement())
+  transactionId String
+  userId        Int?
+  email         String
+  amount        Float
+  createdAt     DateTime         @default(now()) @db.Timestamp(0)
+  user          Users?           @relation(fields: [userId], references: [id])
+  details       DonationDetails?
+}
+
+model DonationDetails {
+  id                    Int                @id @default(autoincrement())
+  donationId            Int                @unique
+  giftId                Int?
+  donorAddressId        Int?               @unique
+  honoreeId             Int?               @unique
+  donation              Donations?         @relation(fields: [donationId], references: [id])
+  gift                  Gifts?             @relation(fields: [giftId], references: [id])
+  honoreeDetails        Honorees?          @relation(fields: [honoreeId], references: [id])
+  donorShippingAddresss ShippingAddresses? @relation(fields: [donorAddressId], references: [id])
+}
+
+model ShippingAddresses {
+  id          Int              @id @default(autoincrement())
+  email       String
+  phoneNumber String
+  firstName   String
+  lastName    String
+  address1    String
+  address2    String
+  state       String
+  country     String
+  city        String
+  zipcode     String
+  donor       DonationDetails?
+  honoree     Honorees?
+}
+
+model Honorees {
+  id            Int               @id @default(autoincrement())
+  tributeType   String
+  tributeName   String
+  addressId     Int               @unique
+  sendCard      Boolean           @default(false)
+  numberOfCards Int?
+  donation      DonationDetails?
+  address       ShippingAddresses @relation(fields: [addressId], references: [id])
+}
+
+model Gifts {
+  id          Int               @id @default(autoincrement())
+  title       String
+  description String?
+  picture     String
+  isActive    Boolean           @default(true)
+  createdAt   DateTime          @default(now()) @db.Timestamp(0)
+  details     DonationDetails[]
+}
+
+model Stories {
+  id            Int      @id @default(autoincrement())
+  userId        Int?
+  name          String
+  email         String
+  description   String
+  adminApproved Boolean  @default(false)
+  createdAt     DateTime @default(now()) @db.Timestamp(0)
+  submittedBy   Users?   @relation(fields: [userId], references: [id])
+}
+
+model Gallery {
+  id        Int          @id @default(autoincrement())
+  type      CONTENT_TYPE
+  url       String
+  year      Int
+  createdAt DateTime     @default(now()) @db.Timestamp(0)
+}
+
+model TeamMembers {
+  id          Int      @id @default(autoincrement())
+  name        String
+  designation String?
+  picture     String?
+  createdAt   DateTime @default(now()) @db.Timestamp(0)
+}
+
+model ContactMessages {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  email     String
+  message   String
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+}
+
+//enums
+enum ADMIN_ROLES {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum CONTENT_TYPE {
+  PICTURE
+  VIDEO
+}
+
+enum SUBSCRIPTION_STATUS {
+  ACTIVE
+  INACTIVE
+}
